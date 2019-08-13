@@ -5,11 +5,11 @@ namespace :import do
   task seeds: :environment do
 
     data = { "Merchant" => ["db/csv/merchants.csv", Merchant],
-          "Customer" => ["db/customers.csv", Customer],
-          "Items" => ["db/items.csv", Item],
-          "Invoice" => ["db/invoices.csv", Invoice],
-          "Transactions" => ["db/transactions.csv", Transaction],
-          "InvoiceItem" => ["db/invoice_items.csv", InvoiceItem]}
+          "Customer" => ["db/csv/customers.csv", Customer],
+          "Items" => ["db/csv/items.csv", Item],
+          "Invoice" => ["db/csv/invoices.csv", Invoice],
+          "Transactions" => ["db/csv/transactions.csv", Transaction],
+          "InvoiceItem" => ["db/csv/invoice_items.csv", InvoiceItem]}
 
     data.each do |key, array|
 
