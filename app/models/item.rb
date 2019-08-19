@@ -6,4 +6,13 @@ class Item < ApplicationRecord
   validates_presence_of :name
   validates_presence_of :description
   validates_presence_of :unit_price
+
+  def most_revenue(quantity)
+    Item.joins(invoice_items: [invoice: :transactions])
+    .where("transactions.result = ?", "success")
+    .select("items.*, sum(invoice_items.quantity * invoice_items.unit_price) as revenue")
+    .group(:id)
+    .order("revenue desc")
+    .limit(quantity)
+  end
 end

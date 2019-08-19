@@ -78,4 +78,33 @@ describe "Items API" do
 
     expect(random_item_1["data"]["id"]).to_not eq(random_item_2)
   end
+
+  it "returns a collection of associated invoice items" do
+    merchant = create(:merchant)
+    customer = create(:customer)
+    item = create(:item, merchant: merchant)
+    invoice = create(:invoice, merchant: merchant, customer: customer)
+    invoice_item = create(:invoice_item, invoice: invoice, item: item)
+    # binding.pry
+    get "/api/v1/items/#{item.id}/invoice_items"
+    expect(response).to be_successful
+
+    invoice_item_1 = JSON.parse(response.body)
+    # binding.pry
+    expect(invoice_item_1["data"].first["id"]).to eq(invoice_item.id.to_s)
+  end
+
+  it "returns a collection of associated merchants" do
+    merchant = create(:merchant)
+    customer = create(:customer)
+    item = create(:item, merchant: merchant)
+    invoice = create(:invoice, merchant: merchant, customer: customer)
+    invoice_item = create(:invoice_item, invoice: invoice, item: item)
+
+    get "/api/v1/items/#{item.id}/merchant"
+    expect(response).to be_successful
+
+    merchant_1 = JSON.parse(response.body)
+    expect(merchant_1["data"].first.last).to eq(merchant.id.to_s)
+  end
 end
