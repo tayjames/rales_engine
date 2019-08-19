@@ -1,5 +1,7 @@
 FactoryBot.define do
   factory :merchant do
-    name { "MyString" }
+    name { "Jori's Stories" }
+    # association :items
+    # association :invoices
   end
 end
